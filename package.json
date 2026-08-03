@@ -21,6 +21,7 @@
     "vite": "^6.3.5"
   },
   "engines": {
-    "node": "20.x"
-  }
+    "node": "24.x"
+  },
+  "packageManager": "pnpm@9.15.0"
 }
