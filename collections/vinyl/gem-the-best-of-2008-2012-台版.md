@@ -1,5 +1,6 @@
 ---
 title: "G.E.M. THE BEST OF 2008-2012"
+cover: images/album-g-e-m-邓紫棋-g-e-m-the-best-of-2008-2012.jpg
 artist: "G.E.M 邓紫棋"
 year: 2013
 release_date: 2013-04-12

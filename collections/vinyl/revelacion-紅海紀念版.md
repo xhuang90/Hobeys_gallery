@@ -1,5 +1,6 @@
 ---
 title: "Revelacion"
+cover: images/album-g-e-m-邓紫棋-revelacion.jpg
 artist: "G.E.M 邓紫棋"
 year: 2023
 release_date: 2023-12-15

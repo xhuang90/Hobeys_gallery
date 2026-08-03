@@ -1,5 +1,6 @@
 ---
 title: "MySecret"
+cover: images/album-g-e-m-邓紫棋-mysecret.jpg
 artist: "G.E.M 邓紫棋"
 year: 2010
 release_date: 2010-10-28

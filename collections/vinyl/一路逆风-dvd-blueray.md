@@ -1,5 +1,6 @@
 ---
 title: "一路逆风"
+cover: images/album-g-e-m-邓紫棋-一路逆风.jpg
 artist: "G.E.M 邓紫棋"
 year: 2017
 release_date: 2017-07-07

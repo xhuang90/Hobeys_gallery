@@ -1,5 +1,6 @@
 ---
 title: "This is MC"
+cover: images/album-mc张天赋-this-is-mc.jpg
 artist: "MC张天赋"
 year: 2023
 release_date: 2023-03-15

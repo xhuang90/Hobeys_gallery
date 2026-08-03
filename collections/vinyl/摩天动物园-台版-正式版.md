@@ -1,5 +1,6 @@
 ---
 title: "摩天动物园"
+cover: images/album-g-e-m-邓紫棋-摩天动物园.jpg
 artist: "G.E.M 邓紫棋"
 year: 2019
 release_date: 2019-12-27

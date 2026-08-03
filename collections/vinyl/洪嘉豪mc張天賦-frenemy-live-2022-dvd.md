@@ -1,5 +1,6 @@
 ---
 title: "洪嘉豪×MC張天賦 Frenemy Live 2022"
+cover: images/album-洪嘉豪-mc張天賦-洪嘉豪-mc張天賦-frenemy-live-2022.jpg
 artist: "洪嘉豪×MC張天賦"
 year: 2023
 release_date: 2023-03-07

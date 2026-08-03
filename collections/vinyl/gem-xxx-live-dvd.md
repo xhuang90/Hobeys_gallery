@@ -1,5 +1,6 @@
 ---
 title: "G.E.M. X.X.X. LIVE"
+cover: images/album-g-e-m-邓紫棋-g-e-m-x-x-x-live.jpg
 artist: "G.E.M 邓紫棋"
 year: 2013
 release_date: 2013-12-20

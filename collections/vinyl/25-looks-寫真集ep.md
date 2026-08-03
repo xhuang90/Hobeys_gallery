@@ -1,5 +1,6 @@
 ---
 title: "25 LOOKS"
+cover: images/album-g-e-m-邓紫棋-25-looks.jpg
 artist: "G.E.M 邓紫棋"
 year: 2016
 release_date: 2016-09-30

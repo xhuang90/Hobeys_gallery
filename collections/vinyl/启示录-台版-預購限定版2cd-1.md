@@ -1,5 +1,6 @@
 ---
 title: "启示录"
+cover: images/album-g-e-m-邓紫棋-启示录.jpg
 artist: "G.E.M 邓紫棋"
 year: 2022
 release_date: 2022-09-30
