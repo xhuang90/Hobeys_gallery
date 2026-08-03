@@ -24,13 +24,15 @@ export const COLLECTIONS = {
     gallery: '唱片馆',
     gradient: 'linear-gradient(135deg, #5b4a6e 0%, #322a40 100%)',
     fields: [
-      ['artist', '艺术家'], ['year', '发行年份'], ['label', '厂牌'],
+      ['artist', '艺术家'], ['year', '发行年份'], ['release_date', '发行日期'],
       ['format', '格式'], ['pressing', '版本'], ['status', '状态'], ['rating', '喜爱度'],
+      ['price', '价格'], ['rmb_price', '人民币价格'], ['purchase_place', '购买渠道'],
+      ['link', '链接'], ['note', '备注'],
     ],
-    cardLine: d => [d.artist, d.year].filter(Boolean).join(' · '),
+    cardLine: d => [d.artist, d.pressing || d.format, d.year].filter(Boolean).join(' · '),
     statuses: {
       owned:    { label: '已收藏', color: '#2f7d4f' },
-      wishlist: { label: '想要',   color: '#d9730d' },
+      wishlist: { label: '在路上', color: '#d9730d' },
     },
   },
   books: {

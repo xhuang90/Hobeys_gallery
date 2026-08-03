@@ -1,0 +1,26 @@
+---
+title: "启示录"
+artist: "G.E.M 邓紫棋"
+year: 2022
+release_date: 2022-09-30
+format: "CD"
+pressing: "内地版-正式版2CD"
+status: wishlist
+added: 2024-01-10
+purchase_place: "Taobao-天沐"
+price: "99"
+rmb_price: 99.0
+link: "https://www.5music.com.tw/CDList-C.asp?cdno=443465679085"
+note: "🚚 在路上"
+tags: [邓紫棋]
+---
+
+## 笔记
+
+购于 **Taobao-天沐**
+
+🚚 还在路上，期待收货！
+
+💰 价格：99（≈ ¥99.0）
+
+🔗 [购买链接](https://www.5music.com.tw/CDList-C.asp?cdno=443465679085)

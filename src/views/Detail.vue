@@ -32,6 +32,9 @@
                 <span v-else-if="key === 'rating'" class="stars">
                   {{ '★'.repeat(entry.rating) }}{{ '☆'.repeat(5 - entry.rating) }}
                 </span>
+                <a v-else-if="key === 'link'" :href="entry[key]" target="_blank" rel="noopener" style="color: var(--accent); word-break: break-all;">
+                  {{ entry[key] }}
+                </a>
                 <span v-else>{{ entry[key] }}</span>
               </td>
             </template>
