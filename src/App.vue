@@ -1,5 +1,5 @@
 <template>
-  <NavBar @open-search="searchOpen = true" />
+  <NavBar @open-search="searchOpen = true" @export="handleExport" />
   <main class="wrap">
     <router-view v-slot="{ Component }">
       <transition name="page" mode="out-in">
@@ -129,4 +129,112 @@ function onKeydown(e) {
 
 onMounted(() => window.addEventListener('keydown', onKeydown))
 onUnmounted(() => window.removeEventListener('keydown', onKeydown))
+
+// ====== Excel 导出 ======
+
+const exporting = ref(false)
+
+const TYPE_LABELS = { lego: '乐高', vinyl: '唱片', books: '书籍', movies: '电影' }
+const STATUS_LABELS = {
+  built: '已拼搭', unbuilt: '未拼搭', wishlist: '想要',
+  owned: '已收藏',
+  read: '已读', reading: '在读', unread: '未读',
+  watched: '已看',
+}
+
+function stripMarkdown(text) {
+  if (!text) return ''
+  return text
+    .replace(/^#{1,3}\s+/gm, '')
+    .replace(/\*\*(.+?)\*\*/g, '$1')
+    .replace(/\*(.+?)\*/g, '$1')
+    .replace(/`(.+?)`/g, '$1')
+    .replace(/\[(.+?)\]\(.+?\)/g, '$1')
+    .replace(/^>\s*/gm, '')
+    .replace(/^- /gm, '')
+    .replace(/\r?\n/g, ' ')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+}
+
+function extractRow(entry) {
+  return {
+    id: entry.type + '-' + entry.slug,
+    pic: entry.cover || '',
+    album: entry.title || '',
+    artist: entry.artist || entry.author || entry.director || '',
+    version: entry.pressing || entry.format || entry.theme || '',
+    release_date: entry.release_date || entry.year || '',
+    status: STATUS_LABELS[entry.status] || entry.status || '',
+    purchase_date: entry.added || '',
+    purchase_from: entry.purchase_place || '',
+    price: entry.price || '',
+    rmb_price: entry.rmb_price || '',
+    link: entry.link || '',
+    content: stripMarkdown(entry.body_html || entry.body_plain || ''),
+  }
+}
+
+const COLUMNS = [
+  { key: 'id', label: 'id' },
+  { key: 'pic', label: 'pic' },
+  { key: 'album', label: 'album' },
+  { key: 'artist', label: 'artist' },
+  { key: 'version', label: 'version' },
+  { key: 'release_date', label: 'release date' },
+  { key: 'status', label: 'status' },
+  { key: 'purchase_date', label: 'purchase date' },
+  { key: 'purchase_from', label: 'purchase from' },
+  { key: 'price', label: 'price' },
+  { key: 'rmb_price', label: 'rmb_price' },
+  { key: 'link', label: 'link' },
+  { key: 'content', label: 'content' },
+]
+
+async function handleExport() {
+  if (exporting.value) return
+  exporting.value = true
+  try {
+    const XLSX = await import('xlsx')
+    const wb = XLSX.utils.book_new()
+
+    // 按类型分 Sheet
+    for (const type of ['lego', 'vinyl', 'books', 'movies']) {
+      const items = entries.value.filter(e => e.type === type)
+      if (items.length === 0) continue
+
+      const rows = items.map(extractRow)
+      const ws = XLSX.utils.json_to_sheet(rows, { header: COLUMNS.map(c => c.key) })
+      XLSX.utils.sheet_add_aoa(ws, [COLUMNS.map(c => c.label)], { origin: 'A1' })
+
+      ws['!cols'] = [
+        { wch: 32 }, { wch: 20 }, { wch: 28 }, { wch: 18 },
+        { wch: 24 }, { wch: 14 }, { wch: 10 }, { wch: 14 },
+        { wch: 18 }, { wch: 12 }, { wch: 12 }, { wch: 36 }, { wch: 60 },
+      ]
+
+      XLSX.utils.book_append_sheet(wb, ws, TYPE_LABELS[type] || type)
+    }
+
+    // 全部汇总 Sheet
+    const allRows = entries.value.map(e => {
+      const row = extractRow(e)
+      row.type = TYPE_LABELS[e.type] || e.type
+      return row
+    })
+    const allCols = [{ key: 'type', label: '类型' }, ...COLUMNS]
+    const wsAll = XLSX.utils.json_to_sheet(allRows, { header: allCols.map(c => c.key) })
+    XLSX.utils.sheet_add_aoa(wsAll, [allCols.map(c => c.label)], { origin: 'A1' })
+    wsAll['!cols'] = [
+      { wch: 8 }, { wch: 32 }, { wch: 20 }, { wch: 28 }, { wch: 18 },
+      { wch: 24 }, { wch: 14 }, { wch: 10 }, { wch: 14 },
+      { wch: 18 }, { wch: 12 }, { wch: 12 }, { wch: 36 }, { wch: 60 },
+    ]
+    XLSX.utils.book_append_sheet(wb, wsAll, '全部')
+
+    XLSX.writeFile(wb, '馆藏导出.xlsx')
+  } finally {
+    exporting.value = false
+  }
+}
 </script>

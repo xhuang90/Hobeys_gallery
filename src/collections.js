@@ -25,7 +25,8 @@ export const COLLECTIONS = {
     gradient: 'linear-gradient(135deg, #5b4a6e 0%, #322a40 100%)',
     fields: [
       ['artist', '艺术家'], ['year', '发行年份'], ['release_date', '发行日期'],
-      ['format', '格式'], ['pressing', '版本'], ['status', '状态'], ['rating', '喜爱度'],
+      ['label', '唱片公司'], ['format', '格式'], ['pressing', '版本'],
+      ['status', '状态'], ['rating', '喜爱度'],
       ['price', '价格'], ['rmb_price', '人民币价格'], ['purchase_place', '购买渠道'],
       ['link', '链接'], ['note', '备注'],
     ],

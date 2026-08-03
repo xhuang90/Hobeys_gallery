@@ -41,7 +41,7 @@
               @click="$router.push(`/${type}/${encodeURIComponent(group.key)}`)"
             >
               <div class="vinyl-card-image">
-                <img v-if="group.cover" :src="group.cover" :alt="group.title" loading="lazy" />
+                <img v-if="group.cover" :src="coverPath(group.cover)" :alt="group.title" loading="lazy" />
                 <div v-else class="vinyl-placeholder">
                   <span>{{ cfg.icon }}</span>
                 </div>
@@ -82,7 +82,7 @@
               @click="$router.push(`/${type}/${entry.slug}`)"
             >
               <div class="list-thumb">
-                <img v-if="entry.cover" :src="entry.cover" :alt="entry.title" />
+                <img v-if="entry.cover" :src="coverPath(entry.cover)" :alt="entry.title" />
                 <span v-else>{{ cfg.icon }}</span>
               </div>
               <div>
@@ -136,6 +136,13 @@ const view = ref('grid')
 const sidebarSelection = ref('all')
 
 const myEntries = computed(() => entries.value.filter(e => e.type === type.value))
+
+// 封面图路径处理：确保以 / 开头
+function coverPath(cover) {
+  if (!cover) return ''
+  if (cover.startsWith('http')) return cover
+  return cover.startsWith('/') ? cover : '/' + cover
+}
 
 // Sidebar category filtering
 const sidebarFiltered = computed(() => {

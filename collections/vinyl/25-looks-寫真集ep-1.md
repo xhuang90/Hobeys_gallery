@@ -13,6 +13,13 @@ price: "HKD250"
 rmb_price: 225.0
 link: "https://www.5music.com.tw/Cdlist-C.asp?cdno=437465678869"
 tags: [邓紫棋]
+label: "蜂鸟音乐"
+description: "邓紫棋于2016年发行的写真EP，收录了4首新歌并附赠25个不同造型的写真集。这张EP是邓紫棋出道以来最大胆的视觉尝试，25个造型展现了她从女孩到女人的蜕变，音乐风格也更加成熟多元。"
+tracklist: |
+  01. 再见 (Club Mix)
+  02. 多远都要在一起 (Dub Mix)
+  03. 泡沫 (PÀO MÒ Remix)
+  04. 瞬间 (Dance Remix)
 ---
 
 ## 笔记

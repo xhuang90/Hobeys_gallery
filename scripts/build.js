@@ -24,9 +24,25 @@ function parseFrontmatter(text) {
   const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!m) return { data: {}, body: text };
   const data = {};
-  for (const line of m[1].split(/\r?\n/)) {
+  const lines = m[1].split(/\r?\n/);
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    // YAML 多行字符串语法: key: |
+    const pipeMatch = line.match(/^([A-Za-z_][\w-]*):\s*\|\s*$/);
+    if (pipeMatch) {
+      const key = pipeMatch[1];
+      const blockLines = [];
+      i++;
+      while (i < lines.length && /^\s{2,}/.test(lines[i])) {
+        blockLines.push(lines[i].replace(/^\s{2}/, ''));
+        i++;
+      }
+      data[key] = blockLines.join('\n');
+      continue;
+    }
     const kv = line.match(/^([A-Za-z_][\w-]*):\s*(.*)$/);
-    if (!kv) continue;
+    if (!kv) { i++; continue; }
     const key = kv[1];
     let val = kv[2].trim();
     if (val.startsWith('[') && val.endsWith(']')) {
@@ -36,6 +52,7 @@ function parseFrontmatter(text) {
     } else {
       data[key] = val.replace(/^["']|["']$/g, '');
     }
+    i++;
   }
   return { data, body: m[2] };
 }

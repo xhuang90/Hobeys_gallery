@@ -6,8 +6,8 @@
     </button>
 
     <div v-if="!collapsed" class="sidebar-content">
-      <!-- ===== 状态筛选 ===== -->
-      <div class="sidebar-section">
+      <!-- ===== 状态筛选（唱片不显示，全是已收藏） ===== -->
+      <div v-if="type !== 'vinyl'" class="sidebar-section">
         <h4 class="sidebar-title">状态</h4>
         <ul class="sidebar-list">
           <li

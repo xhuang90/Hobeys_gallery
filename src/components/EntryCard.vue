@@ -1,7 +1,7 @@
 <template>
   <div class="card" @click="$router.push(`/${entry.type}/${entry.slug}`)">
     <div class="card-image">
-      <img v-if="entry.cover" :src="entry.cover" :alt="entry.title" />
+      <img v-if="entry.cover" :src="coverPath(entry.cover)" :alt="entry.title" />
       <div v-else class="placeholder">
         <span>{{ cfg.icon }}</span>
       </div>
@@ -33,6 +33,12 @@ import { COLLECTIONS } from '../collections.js'
 const props = defineProps({ entry: Object })
 const cfg = computed(() => COLLECTIONS[props.entry.type])
 const statusCfg = computed(() => cfg.value?.statuses?.[props.entry.status])
+
+function coverPath(cover) {
+  if (!cover) return ''
+  if (cover.startsWith('http')) return cover
+  return cover.startsWith('/') ? cover : '/' + cover
+}
 
 function formatNumber(num) {
   return num?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
