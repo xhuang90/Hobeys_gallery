@@ -33,7 +33,7 @@
         </div>
       </template>
 
-      <!-- Vinyl: by format → artist -->
+      <!-- Vinyl: by format → artist (nested tree) -->
       <template v-if="type === 'vinyl'">
         <div class="sidebar-section">
           <h4 class="sidebar-title">格式</h4>
@@ -46,43 +46,42 @@
               <span class="sidebar-label">全部</span>
               <span class="sidebar-count">{{ total }}</span>
             </li>
-            <li
-              v-for="fmt in formatGroups"
-              :key="fmt.key"
-              class="sidebar-item sidebar-parent"
-              :class="{ active: selected === fmt.key, expanded: expandedFormats.includes(fmt.key) }"
-              @click="toggleFormat(fmt.key)"
-            >
-              <span class="sidebar-label">
-                <span class="expand-icon">{{ expandedFormats.includes(fmt.key) ? '▾' : '▸' }}</span>
-                {{ fmt.label }}
-              </span>
-              <span class="sidebar-count">{{ fmt.count }}</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Second level: artist (when a format is selected) -->
-        <div v-if="selectedFormat" class="sidebar-section sidebar-sub">
-          <h4 class="sidebar-title">{{ formatGroups.find(f => f.key === selectedFormat)?.label }} · 歌手</h4>
-          <ul class="sidebar-list">
-            <li
-              class="sidebar-item"
-              :class="{ active: selected === selectedFormat }"
-              @click="$emit('select', selectedFormat)"
-            >
-              <span class="sidebar-label">全部</span>
-              <span class="sidebar-count">{{ currentArtistTotal }}</span>
-            </li>
-            <li
-              v-for="artist in currentArtists"
-              :key="artist.key"
-              class="sidebar-item sidebar-child"
-              :class="{ active: selected === artist.fullKey }"
-              @click="$emit('select', artist.fullKey)"
-            >
-              <span class="sidebar-label">{{ artist.key }}</span>
-              <span class="sidebar-count">{{ artist.count }}</span>
+            <li v-for="fmt in formatGroups" :key="fmt.key" class="sidebar-tree-item">
+              <!-- First level: format -->
+              <div
+                class="sidebar-item sidebar-parent"
+                :class="{ active: selected === fmt.key || selected?.startsWith(fmt.key + ':::'), expanded: expandedFormats.includes(fmt.key) }"
+                @click="toggleFormat(fmt.key)"
+              >
+                <span class="sidebar-label">
+                  <span class="expand-icon">{{ expandedFormats.includes(fmt.key) ? '▾' : '▸' }}</span>
+                  {{ fmt.label }}
+                </span>
+                <span class="sidebar-count">{{ fmt.count }}</span>
+              </div>
+              <!-- Second level: artists (nested under this format) -->
+              <transition name="slide-tree">
+                <div v-if="expandedFormats.includes(fmt.key)" class="sidebar-subtree">
+                  <div
+                    class="sidebar-item sidebar-child"
+                    :class="{ active: selected === fmt.key }"
+                    @click.stop="$emit('select', fmt.key)"
+                  >
+                    <span class="sidebar-label">全部{{ fmt.label }}</span>
+                    <span class="sidebar-count">{{ fmt.count }}</span>
+                  </div>
+                  <div
+                    v-for="artist in getArtistsForFormat(fmt.key)"
+                    :key="artist.key"
+                    class="sidebar-item sidebar-child"
+                    :class="{ active: selected === artist.fullKey }"
+                    @click.stop="$emit('select', artist.fullKey)"
+                  >
+                    <span class="sidebar-label">{{ artist.key }}</span>
+                    <span class="sidebar-count">{{ artist.count }}</span>
+                  </div>
+                </div>
+              </transition>
             </li>
           </ul>
         </div>
@@ -215,9 +214,8 @@ const selectedFormat = computed(() => {
   return null
 })
 
-const currentArtists = computed(() => {
-  if (!selectedFormat.value) return []
-  const fmt = formatGroups.value.find(f => f.key === selectedFormat.value)
+function getArtistsForFormat(formatKey) {
+  const fmt = formatGroups.value.find(f => f.key === formatKey)
   if (!fmt) return []
   const map = {}
   for (const e of fmt.entries) {
@@ -226,15 +224,9 @@ const currentArtists = computed(() => {
     map[key]++
   }
   return Object.entries(map)
-    .map(([key, count]) => ({ key, count, fullKey: `${selectedFormat.value}:::${key}` }))
+    .map(([key, count]) => ({ key, count, fullKey: `${formatKey}:::${key}` }))
     .sort((a, b) => b.count - a.count)
-})
-
-const currentArtistTotal = computed(() => {
-  if (!selectedFormat.value) return 0
-  const fmt = formatGroups.value.find(f => f.key === selectedFormat.value)
-  return fmt ? fmt.count : 0
-})
+}
 
 function toggleFormat(key) {
   const idx = expandedFormats.value.indexOf(key)
@@ -382,14 +374,56 @@ watch(() => props.selected, (val) => {
   text-align: center;
 }
 
-.sidebar-sub {
+/* Nested tree structure */
+.sidebar-tree-item {
+  list-style: none;
+}
+
+.sidebar-subtree {
   padding-left: 16px;
+  margin-left: 20px;
   border-left: 2px solid var(--line);
-  margin-left: 12px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .sidebar-child {
-  padding-left: 20px;
+  padding-left: 10px !important;
+  font-size: 12.5px;
+}
+
+.sidebar-parent {
+  font-weight: 500;
+}
+
+.sidebar-parent.expanded {
+  background: var(--hover-bg);
+  color: var(--ink);
+  border-radius: 6px 6px 0 0;
+}
+
+/* Slide transition for subtree */
+.slide-tree-enter-active {
+  transition: all 0.2s ease-out;
+}
+.slide-tree-leave-active {
+  transition: all 0.15s ease-in;
+}
+.slide-tree-enter-from,
+.slide-tree-leave-to {
+  opacity: 0;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+.slide-tree-enter-to,
+.slide-tree-leave-from {
+  opacity: 1;
+  max-height: 500px;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
