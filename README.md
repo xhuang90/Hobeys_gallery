@@ -68,12 +68,24 @@ git add -A && git commit -m "入藏: 雄狮骑士城堡" && git push
 - **页面过渡**：平滑动画
 - **卡片悬停**：上浮 + 阴影 + 图片缩放
 
-## 部署（Cloudflare Pages）
+## 部署（Vercel）
 
-1. 连接 GitHub 仓库
-2. 构建命令：`npm run build`
-3. 输出目录：`dist`
-4. 完成。每次 `git push` 自动部署
+由于 Vercel 构建环境 npm 兼容性问题，采用本地构建 + 上传的方式部署。
+
+```bash
+# 一键部署（构建 + 上传）
+bash deploy.sh
+```
+
+部署后访问：https://hobeys-gallery.vercel.app
+
+## Excel 导出
+
+```bash
+npm run export
+```
+
+生成 `馆藏导出.xlsx`，包含乐高/唱片/书籍/电影/全部 5 个 Sheet。
 
 ## 数据 Schema
 
