@@ -8,6 +8,8 @@ export const COLLECTIONS = {
     fields: [
       ['set_id', '套装编号'], ['theme', '系列'], ['year', '年份'],
       ['pieces', '零件数'], ['status', '状态'], ['rating', '喜爱度'],
+      ['price', '价格'], ['purchase_place', '购买地点'],
+      ['built_date', '拼搭日期'], ['dimensions', '尺寸'],
     ],
     cardLine: d => [d.set_id && `#${d.set_id}`, d.theme, d.pieces && `${d.pieces} pcs`].filter(Boolean).join(' · '),
     statuses: {
