@@ -23,18 +23,20 @@ const OUT = path.join(ROOT, 'dist');
 
 const STATUS = {
   built:    { label: '已拼搭', color: '#2f7d4f' },
-  unbuilt:  { label: '未拼搭', color: '#8a8577' },
+  unbuilt:  { label: '未拼搭', color: '#9b9b9b' },
   owned:    { label: '已收藏', color: '#2f7d4f' },
   read:     { label: '已读',   color: '#2f7d4f' },
   reading:  { label: '在读',   color: '#2b6cb0' },
-  unread:   { label: '未读',   color: '#8a8577' },
+  unread:   { label: '未读',   color: '#9b9b9b' },
   watched:  { label: '已看',   color: '#2f7d4f' },
-  wishlist: { label: '想要',   color: '#c05621' },
+  wishlist: { label: '想要',   color: '#d9730d' },
 };
 
 const COLLECTIONS = {
   lego: {
     name: '乐高', icon: '🧱', dir: 'lego',
+    gallery: '乐高馆',
+    gradient: 'linear-gradient(135deg, #e8a33d 0%, #cf6f2e 100%)',
     fields: [
       ['set_id', '套装编号'], ['theme', '系列'], ['year', '年份'],
       ['pieces', '零件数'], ['status', '状态'], ['rating', '喜爱度'],
@@ -43,6 +45,8 @@ const COLLECTIONS = {
   },
   vinyl: {
     name: '唱片', icon: '🎵', dir: 'vinyl',
+    gallery: '唱片馆',
+    gradient: 'linear-gradient(135deg, #5b4a6e 0%, #322a40 100%)',
     fields: [
       ['artist', '艺术家'], ['year', '发行年份'], ['label', '厂牌'],
       ['format', '格式'], ['pressing', '版本'], ['status', '状态'], ['rating', '喜爱度'],
@@ -51,6 +55,8 @@ const COLLECTIONS = {
   },
   books: {
     name: '书籍', icon: '📚', dir: 'books',
+    gallery: '书籍馆',
+    gradient: 'linear-gradient(135deg, #4a7c59 0%, #2f5d3f 100%)',
     fields: [
       ['author', '作者'], ['publisher', '出版社'], ['year', '出版年份'],
       ['isbn', 'ISBN'], ['status', '状态'], ['rating', '喜爱度'],
@@ -59,6 +65,8 @@ const COLLECTIONS = {
   },
   movies: {
     name: '电影', icon: '🎬', dir: 'movies',
+    gallery: '电影馆',
+    gradient: 'linear-gradient(135deg, #3d5a80 0%, #263d5c 100%)',
     fields: [
       ['director', '导演'], ['year', '年份'], ['region', '地区'],
       ['status', '状态'], ['rating', '喜爱度'],
@@ -66,6 +74,8 @@ const COLLECTIONS = {
     cardLine: d => [d.director, d.year].filter(Boolean).join(' · '),
   },
 };
+
+const HOME_GRADIENT = 'linear-gradient(120deg, #c23068 0%, #e0568b 55%, #ef8354 100%)';
 
 /* ================= 解析层 ================= */
 
@@ -144,89 +154,111 @@ function loadAll() {
 
 const CSS = `
   :root {
-    --bg: #faf7f2; --card: #ffffff; --ink: #2b2622; --dim: #8a8577;
-    --accent: #b4552d; --line: #e8e2d8; --radius: 14px;
+    --bg: #fbfbfa; --card: #ffffff; --ink: #37352f; --dim: #787774; --faint: #9b9b9b;
+    --accent: #c23068; --line: #e9e9e7; --radius: 8px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: var(--bg); color: var(--ink);
-    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
-    line-height: 1.7; -webkit-font-smoothing: antialiased;
+    font-family: -apple-system, Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.65; -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, .serif { font-family: Georgia, "Songti SC", "SimSun", serif; }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .serif { font-family: Georgia, "Songti SC", "SimSun", serif; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
 
   header.site {
-    border-bottom: 1px solid var(--line); background: rgba(250,247,242,.92);
-    position: sticky; top: 0; backdrop-filter: blur(8px); z-index: 10;
+    border-bottom: 1px solid var(--line); background: rgba(251,251,250,.88);
+    position: sticky; top: 0; backdrop-filter: blur(10px); z-index: 10;
   }
-  header.site .wrap { display: flex; align-items: center; gap: 28px; height: 60px; }
-  .brand { font-weight: 700; font-size: 18px; letter-spacing: 1px; color: var(--ink); }
-  .brand:hover { text-decoration: none; }
-  nav { display: flex; gap: 20px; }
-  nav a { color: var(--dim); font-size: 14px; }
-  nav a.on, nav a:hover { color: var(--accent); text-decoration: none; }
+  header.site .wrap { display: flex; align-items: center; gap: 32px; height: 56px; }
+  .brand { font-weight: 600; font-size: 15px; letter-spacing: .5px; color: var(--ink); white-space: nowrap; }
+  nav { display: flex; gap: 4px; overflow-x: auto; }
+  nav a { color: var(--dim); font-size: 13.5px; padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
+  nav a:hover { background: #f1f1ef; color: var(--ink); }
+  nav a.on { color: var(--accent); font-weight: 500; }
 
-  .hero { padding: 72px 0 40px; }
-  .hero h1 { font-size: 42px; margin-bottom: 12px; }
-  .hero p { color: var(--dim); max-width: 560px; }
+  /* ---------- 展馆封面（展厅门头） ---------- */
+  .hero { margin: 28px 0 0; border-radius: 12px; padding: 56px 48px; color: #fff; position: relative; overflow: hidden; }
+  .hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(255,255,255,.18), transparent 55%);
+  }
+  .hero .kicker { font-size: 13px; letter-spacing: 3px; opacity: .85; text-transform: uppercase; }
+  .hero h1 { font-size: 44px; margin: 10px 0 12px; letter-spacing: -0.01em; position: relative; }
+  .hero p { opacity: .92; max-width: 520px; font-size: 15px; }
+  .hero .count { position: absolute; right: 48px; bottom: 40px; text-align: right; opacity: .9; }
+  .hero .count .n { font-size: 40px; font-weight: 700; line-height: 1; }
+  .hero .count .l { font-size: 12px; letter-spacing: 2px; }
+  @media (max-width: 640px) { .hero { padding: 40px 28px; } .hero h1 { font-size: 32px; } .hero .count { display: none; } }
 
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; padding: 24px 0 8px; }
+  /* ---------- 分馆入口 ---------- */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; padding: 28px 0 4px; }
   .stat {
-    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-    padding: 20px 22px; display: flex; align-items: center; gap: 14px;
-    transition: transform .15s, box-shadow .15s;
+    border-radius: 10px; padding: 22px 24px; color: #fff; display: flex; align-items: center; gap: 16px;
+    transition: transform .15s ease, box-shadow .15s ease;
   }
-  .stat:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(43,38,34,.08); text-decoration: none; }
-  .stat .ic { font-size: 30px; }
-  .stat .n { font-size: 26px; font-weight: 700; line-height: 1.1; }
-  .stat .l { color: var(--dim); font-size: 13px; }
+  .stat:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(55,53,47,.16); }
+  .stat .ic { font-size: 34px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.15)); }
+  .stat .n { font-size: 28px; font-weight: 700; line-height: 1.1; }
+  .stat .l { font-size: 13px; opacity: .88; }
 
-  .sect { padding: 40px 0 8px; }
-  .sect > h2 { font-size: 24px; margin-bottom: 18px; display: flex; align-items: baseline; gap: 10px; }
-  .sect > h2 .more { font-size: 13px; color: var(--dim); font-family: -apple-system, "PingFang SC", sans-serif; }
+  /* ---------- 展区标题 ---------- */
+  .sect { padding: 40px 0 4px; }
+  .sect > h2 { font-size: 22px; margin-bottom: 4px; display: flex; align-items: baseline; gap: 12px; }
+  .sect > .sub { color: var(--faint); font-size: 13px; margin-bottom: 18px; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
+  /* ---------- 方块展品卡 ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
   .card {
     background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
-    overflow: hidden; display: flex; flex-direction: column; color: var(--ink);
-    transition: transform .15s, box-shadow .15s;
+    overflow: hidden; display: flex; flex-direction: column;
+    transition: transform .15s ease, box-shadow .15s ease;
   }
-  .card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(43,38,34,.10); text-decoration: none; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(55,53,47,.10); }
   .cover {
-    height: 120px; display: flex; align-items: center; justify-content: center;
-    font-size: 44px; background: linear-gradient(135deg, #efe7da, #e3d5bf);
+    aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center;
+    font-size: 56px; color: #fff; background-size: cover; background-position: center;
+    text-shadow: 0 2px 8px rgba(0,0,0,.2);
   }
   .card .bd { padding: 14px 16px 16px; }
-  .card h3 { font-size: 16px; margin-bottom: 4px; line-height: 1.4; }
-  .card .sub { font-size: 12.5px; color: var(--dim); margin-bottom: 8px; }
+  .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 3px; line-height: 1.45; }
+  .card .sub { font-size: 12.5px; color: var(--dim); margin-bottom: 10px; }
+  .card .row { display: flex; justify-content: space-between; align-items: center; }
+
+  .badge { display: inline-block; font-size: 11.5px; border-radius: 4px; padding: 1px 8px; color: #fff; font-weight: 500; }
+  .stars { color: #e8a33d; letter-spacing: 1.5px; font-size: 13px; }
+
   .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .tag { font-size: 11px; color: var(--dim); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; }
+  .tag { font-size: 11px; color: var(--dim); background: #f7f7f5; border: 1px solid var(--line); border-radius: 4px; padding: 1px 8px; }
 
-  .badge { display: inline-block; font-size: 12px; border-radius: 999px; padding: 2px 10px; color: #fff; }
-  .stars { color: #d97706; letter-spacing: 2px; }
-
-  .detail-head { padding: 48px 0 24px; border-bottom: 1px solid var(--line); }
-  .crumb { font-size: 13px; color: var(--dim); margin-bottom: 16px; display: inline-block; }
-  .detail-head h1 { font-size: 34px; margin: 6px 0 10px; }
-  .meta-line { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; color: var(--dim); font-size: 14px; }
+  /* ---------- 详情页 ---------- */
+  .detail-hero { margin: 28px 0 0; border-radius: 12px; padding: 40px 48px; color: #fff; position: relative; overflow: hidden; }
+  .detail-hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(255,255,255,.15), transparent 55%);
+  }
+  .detail-hero .crumb { display: inline-block; font-size: 13px; color: #fff; margin-bottom: 14px; position: relative; z-index: 1; opacity: .9; }
+  .detail-hero .crumb:hover { color: #fff; text-decoration: underline; }
+  .detail-hero h1 { font-size: 36px; margin: 8px 0 10px; letter-spacing: -0.01em; }
+  .detail-hero .meta-line { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 13.5px; opacity: .92; }
+  .detail-hero .tags .tag { color: rgba(255,255,255,.92); background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.25); }
+  @media (max-width: 640px) { .detail-hero { padding: 28px; } .detail-hero h1 { font-size: 26px; } }
 
   .detail-body { display: grid; grid-template-columns: 280px 1fr; gap: 36px; padding: 32px 0 60px; }
   @media (max-width: 760px) { .detail-body { grid-template-columns: 1fr; } }
-  table.meta { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; font-size: 14px; }
-  table.meta th, table.meta td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+  table.meta { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; font-size: 13.5px; }
+  table.meta th, table.meta td { padding: 9px 14px; text-align: left; border-bottom: 1px solid var(--line); }
   table.meta tr:last-child th, table.meta tr:last-child td { border-bottom: none; }
-  table.meta th { color: var(--dim); font-weight: 400; width: 42%; }
-  .prose h2 { font-size: 20px; margin: 26px 0 10px; }
-  .prose h3 { font-size: 16px; margin: 20px 0 8px; }
-  .prose p { margin: 10px 0; }
-  .prose ul { padding-left: 22px; margin: 10px 0; }
-  .prose blockquote { border-left: 3px solid var(--accent); padding: 4px 16px; color: var(--dim); margin: 14px 0; background: var(--card); border-radius: 0 8px 8px 0; }
-  .prose code { background: #f0ebe1; border-radius: 5px; padding: 1px 6px; font-size: 13px; }
+  table.meta th { color: var(--faint); font-weight: 400; width: 42%; }
+  .prose h2 { font-size: 18px; margin: 26px 0 10px; }
+  .prose h3 { font-size: 15px; margin: 20px 0 8px; }
+  .prose p { margin: 10px 0; font-size: 14.5px; }
+  .prose ul { padding-left: 22px; margin: 10px 0; font-size: 14.5px; }
+  .prose blockquote { border-left: 3px solid var(--accent); padding: 4px 16px; color: var(--dim); margin: 14px 0; background: var(--card); border-radius: 0 6px 6px 0; }
+  .prose code { background: #f1f1ef; border-radius: 4px; padding: 1px 6px; font-size: 13px; }
 
-  footer.site { border-top: 1px solid var(--line); margin-top: 40px; padding: 28px 0 40px; color: var(--dim); font-size: 13px; text-align: center; }
+  footer.site { border-top: 1px solid var(--line); margin-top: 48px; padding: 28px 0 40px; color: var(--faint); font-size: 12.5px; text-align: center; }
 `;
 
 function nav(active) {
@@ -256,7 +288,7 @@ function layout({ title, active, depth, content }) {
 </head>
 <body>
 <header class="site"><div class="wrap">
-  <a class="brand serif" href="${root}index.html">🏛 我的收藏馆</a>
+  <a class="brand" href="${root}index.html">🏛 我的收藏馆</a>
   <nav>${navHtml}</nav>
 </div></header>
 <main class="wrap">${content}</main>
@@ -280,19 +312,16 @@ function stars(r) {
 function card(entry, depth) {
   const cfg = COLLECTIONS[entry.type];
   const d = entry.data;
-  const cover = d.cover
-    ? `<div class="cover" style="background-image:url('${esc(d.cover)}');background-size:cover;background-position:center"></div>`
-    : `<div class="cover">${cfg.icon}</div>`;
-  const tags = (d.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('');
+  const coverStyle = d.cover
+    ? `background-image:url('${esc(d.cover)}')`
+    : `background:${cfg.gradient}`;
+  const coverInner = d.cover ? '' : cfg.icon;
   return `<a class="card" href="${'../'.repeat(depth)}${cfg.dir}/${entry.slug}.html">
-    ${cover}
+    <div class="cover" style="${coverStyle}">${coverInner}</div>
     <div class="bd">
-      <h3 class="serif">${esc(d.title || entry.slug)}</h3>
+      <h3>${esc(d.title || entry.slug)}</h3>
       <div class="sub">${esc(cfg.cardLine(d))}</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        ${badge(d.status)}${stars(d.rating)}
-      </div>
-      ${tags ? `<div class="tags">${tags}</div>` : ''}
+      <div class="row">${badge(d.status)}${stars(d.rating)}</div>
     </div>
   </a>`;
 }
@@ -302,9 +331,9 @@ function card(entry, depth) {
 function pageHome(entries) {
   const stats = Object.entries(COLLECTIONS).map(([type, cfg]) => {
     const n = entries.filter(e => e.type === type).length;
-    return `<a class="stat" href="${cfg.dir}/index.html">
+    return `<a class="stat" href="${cfg.dir}/index.html" style="background:${cfg.gradient}">
       <span class="ic">${cfg.icon}</span>
-      <span><span class="n">${n}</span><br><span class="l">${cfg.name}馆藏</span></span>
+      <span><span class="n">${n}</span><br><span class="l">${cfg.gallery}</span></span>
     </a>`;
   }).join('');
 
@@ -313,13 +342,16 @@ function pageHome(entries) {
   return layout({
     title: '首页', active: 'home', depth: 0,
     content: `
-      <section class="hero">
+      <section class="hero" style="background:${HOME_GRADIENT}">
+        <div class="kicker">My Vault</div>
         <h1 class="serif">我的收藏馆</h1>
         <p>乐高、唱片、书籍、电影——那些构成我的物件们。每一件都有它的来历和故事。</p>
+        <div class="count"><div class="n">${entries.length}</div><div class="l">件馆藏</div></div>
       </section>
       <section class="stats">${stats}</section>
       <section class="sect">
         <h2 class="serif">最近入库</h2>
+        <div class="sub">最新收入囊中的 ${Math.min(8, entries.length)} 件</div>
         <div class="grid">${recent}</div>
       </section>`,
   });
@@ -332,11 +364,14 @@ function pageCollection(type, entries) {
   return layout({
     title: cfg.name, active: type, depth: 1,
     content: `
-      <section class="hero" style="padding-bottom:24px">
-        <h1 class="serif">${cfg.icon} ${cfg.name}</h1>
-        <p>共 ${mine.length} 件馆藏</p>
+      <section class="hero" style="background:${cfg.gradient}">
+        <div class="kicker">${cfg.name} Gallery</div>
+        <h1 class="serif">${cfg.icon} ${cfg.gallery}</h1>
+        <div class="count"><div class="n">${mine.length}</div><div class="l">件馆藏</div></div>
       </section>
-      <div class="grid">${cards}</div>`,
+      <section class="sect" style="padding-top:28px">
+        <div class="grid">${cards}</div>
+      </section>`,
   });
 }
 
@@ -357,8 +392,8 @@ function pageDetail(entry) {
   return layout({
     title: d.title || entry.slug, active: entry.type, depth: 2,
     content: `
-      <section class="detail-head">
-        <a class="crumb" href="index.html">← 返回${cfg.name}</a>
+      <section class="detail-hero" style="background:${cfg.gradient}">
+        <a class="crumb" href="index.html">← 返回${cfg.gallery}</a>
         <div>${badge(d.status)}</div>
         <h1 class="serif">${esc(d.title || entry.slug)}</h1>
         <div class="meta-line">
