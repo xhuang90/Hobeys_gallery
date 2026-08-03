@@ -1,6 +1,7 @@
 ---
 title: Story of Nian
 set_id: 80106
+cover: images/lego-80106.jpg
 year: 2020
 pieces: 1067
 status: unbuilt

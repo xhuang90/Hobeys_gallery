@@ -1,6 +1,7 @@
 ---
 title: NINJAGO® City
 set_id: 70620
+cover: images/lego-70620.jpg
 theme: NINJAGO
 year: 2019
 pieces: 4867

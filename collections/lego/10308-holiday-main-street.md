@@ -1,6 +1,7 @@
 ---
 title: Holiday Main Street
 set_id: 10308
+cover: images/lego-10308.png
 theme: icons
 year: 2023
 pieces: 650

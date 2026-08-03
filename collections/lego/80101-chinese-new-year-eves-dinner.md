@@ -1,6 +1,7 @@
 ---
 title: Chinese New Year Eve's Dinner
 set_id: 80101
+cover: images/lego-80101.png
 year: 2018
 status: built
 price: "466.3"

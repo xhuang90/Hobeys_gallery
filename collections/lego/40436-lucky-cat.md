@@ -1,6 +1,7 @@
 ---
 title: Lucky Cat
 set_id: 40436
+cover: images/lego-40436.png
 theme: HEADZ
 year: 2020
 pieces: 134

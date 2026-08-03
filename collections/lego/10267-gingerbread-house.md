@@ -1,6 +1,7 @@
 ---
 title: Gingerbread House
 set_id: 10267
+cover: images/lego-10267.jpg
 theme: CREATOR
 year: 2020
 pieces: 1477

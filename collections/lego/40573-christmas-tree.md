@@ -1,6 +1,7 @@
 ---
 title: Christmas Tree
 set_id: 40573
+cover: images/lego-40573.png
 year: 2019
 pieces: 784
 status: unbuilt

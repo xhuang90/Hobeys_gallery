@@ -1,6 +1,7 @@
 ---
 title: Dragon Dance Guy
 set_id: 40354
+cover: images/lego-40354.jpg
 theme: HEADZ
 year: 2020
 pieces: 170

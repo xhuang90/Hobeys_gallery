@@ -1,6 +1,7 @@
 ---
 title: Temple of The Ultimate Ultimate Weapon
 set_id: 70617
+cover: images/lego-70617.jpg
 theme: NINJAGO
 year: 2012
 pieces: 1403

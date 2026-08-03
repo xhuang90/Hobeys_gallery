@@ -1,6 +1,7 @@
 ---
 title: Mini Gingerbread House
 set_id: 40337
+cover: images/lego-40337.jpg
 theme: CREATOR
 year: 2019
 status: unbuilt

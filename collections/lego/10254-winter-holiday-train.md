@@ -1,6 +1,7 @@
 ---
 title: Winter Holiday Train
 set_id: 10254
+cover: images/lego-10254.jpg
 theme: CREATOR
 year: 2018
 pieces: 734

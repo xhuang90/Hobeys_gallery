@@ -1,6 +1,7 @@
 ---
 title: Nutcracker
 set_id: 40254
+cover: images/lego-40254.png
 theme: LimitedEdition
 year: 2019
 pieces: 230

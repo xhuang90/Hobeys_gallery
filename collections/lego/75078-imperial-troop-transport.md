@@ -1,6 +1,7 @@
 ---
 title: Imperial Troop Transport
 set_id: 75078
+cover: images/lego-75078.jpg
 theme: STAR WARS
 year: 2015
 pieces: 141

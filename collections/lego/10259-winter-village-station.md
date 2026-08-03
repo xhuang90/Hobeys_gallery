@@ -1,6 +1,7 @@
 ---
 title: Winter Village Station
 set_id: 10259
+cover: images/lego-10259.jpg
 theme: CREATOR
 pieces: 902
 status: unbuilt

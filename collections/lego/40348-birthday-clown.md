@@ -1,6 +1,7 @@
 ---
 title: Birthday Clown
 set_id: 40348
+cover: images/lego-40348.jpg
 theme: BRICK HEADZ
 year: 2019
 pieces: 150

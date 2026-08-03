@@ -1,6 +1,7 @@
 ---
 title: Elf Club House
 set_id: 10275
+cover: images/lego-10275.jpg
 theme: icons
 year: 2020
 pieces: 1197

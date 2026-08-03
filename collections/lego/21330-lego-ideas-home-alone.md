@@ -1,6 +1,7 @@
 ---
 title: LEGO® Ideas Home Alone
 set_id: 21330
+cover: images/lego-21330.png
 theme: IDEAS
 pieces: 3955
 status: unbuilt

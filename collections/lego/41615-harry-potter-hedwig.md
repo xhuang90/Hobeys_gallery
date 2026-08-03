@@ -1,6 +1,7 @@
 ---
 title: Harry Potter™ & Hedwig™
 set_id: 41615
+cover: images/lego-41615.jpg
 theme: HarryPotter
 year: 2022
 pieces: 180

@@ -1,6 +1,7 @@
 ---
 title: Spider & Haunted House Pack
 set_id: 40493
+cover: images/lego-40493.jpg
 year: 2021
 pieces: 132
 status: unbuilt

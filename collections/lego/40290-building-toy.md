@@ -1,6 +1,7 @@
 ---
 title: Building Toy
 set_id: 40290
+cover: images/lego-40290.jpg
 theme: LEGO60yrs
 year: 2018
 pieces: 421

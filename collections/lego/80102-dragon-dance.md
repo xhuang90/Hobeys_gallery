@@ -1,6 +1,7 @@
 ---
 title: Dragon Dance
 set_id: 80102
+cover: images/lego-80102.png
 year: 2018
 status: built
 price: "396.7"

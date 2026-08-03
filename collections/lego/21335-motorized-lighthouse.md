@@ -1,6 +1,7 @@
 ---
 title: Motorized Lighthouse
 set_id: 21335
+cover: images/lego-21335.png
 theme: IDEAS
 year: 2023
 pieces: 1950

@@ -1,6 +1,7 @@
 ---
 title: Mickey Mouse
 set_id: 41624
+cover: images/lego-41624.jpg
 theme: Disney
 pieces: 109
 status: unbuilt

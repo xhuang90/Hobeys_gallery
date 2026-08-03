@@ -1,6 +1,7 @@
 ---
 title: Old Fishing Store
 set_id: 21310
+cover: images/lego-21310.jpg
 theme: IDEAS
 year: 2018
 pieces: 2049

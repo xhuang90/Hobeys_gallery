@@ -1,6 +1,7 @@
 ---
 title: Lion Dance
 set_id: 80104
+cover: images/lego-80104.jpg
 year: 2001
 pieces: 882
 status: built

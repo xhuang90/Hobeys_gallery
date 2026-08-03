@@ -1,6 +1,7 @@
 ---
 title: Mr. & Mrs. Claus
 set_id: 40274
+cover: images/lego-40274.jpg
 theme: BRICK HEADZ
 year: 2018
 pieces: 341

@@ -1,6 +1,7 @@
 ---
 title: Santa's Sleigh
 set_id: 40499
+cover: images/lego-40499.png
 year: 2021
 pieces: 343
 status: unbuilt

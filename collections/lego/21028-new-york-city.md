@@ -1,6 +1,7 @@
 ---
 title: New York City
 set_id: 21028
+cover: images/lego-21028.jpg
 theme: Architecture
 year: 2019
 pieces: 598

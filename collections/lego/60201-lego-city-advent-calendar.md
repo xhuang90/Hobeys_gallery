@@ -1,6 +1,7 @@
 ---
 title: LEGO® City Advent Calendar
 set_id: 60201
+cover: images/lego-60201.png
 theme: City
 year: 2018
 pieces: 313

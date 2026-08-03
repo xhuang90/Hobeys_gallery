@@ -1,6 +1,7 @@
 ---
 title: Super Mario 64™ Question Mark Block
 set_id: 71395
+cover: images/lego-71395.png
 theme: Super Mario
 year: 2021
 pieces: 2064

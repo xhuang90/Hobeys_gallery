@@ -1,6 +1,7 @@
 ---
 title: Chinese New Year Temple Fair
 set_id: 80105
+cover: images/lego-80105.jpg
 year: 2001
 pieces: 1664
 status: built

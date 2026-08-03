@@ -1,6 +1,7 @@
 ---
 title: Christmas Tree
 set_id: 40338
+cover: images/lego-40338.png
 theme: LimitedEdition
 year: 2019
 pieces: 392

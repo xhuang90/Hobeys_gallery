@@ -1,6 +1,7 @@
 ---
 title: Pickup Truck
 set_id: 10290
+cover: images/lego-10290.jpg
 theme: icons
 year: 2021
 pieces: 1677

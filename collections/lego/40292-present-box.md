@@ -1,6 +1,7 @@
 ---
 title: Present Box
 set_id: 40292
+cover: images/lego-40292.png
 theme: LimitedEdition
 year: 2018
 pieces: 301

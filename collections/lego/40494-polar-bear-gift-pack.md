@@ -1,6 +1,7 @@
 ---
 title: Polar Bear & Gift Pack
 set_id: 40494
+cover: images/lego-40494.jpg
 year: 2021
 pieces: 142
 status: unbuilt

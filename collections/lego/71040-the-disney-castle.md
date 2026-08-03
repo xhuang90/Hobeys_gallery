@@ -1,6 +1,7 @@
 ---
 title: The Disney Castle
 set_id: 71040
+cover: images/lego-71040.jpg
 theme: Disney
 year: 2006
 pieces: 4080

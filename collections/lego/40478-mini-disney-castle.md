@@ -1,6 +1,7 @@
 ---
 title: Mini Disney Castle
 set_id: 40478
+cover: images/lego-40478.png
 theme: Disney
 year: 2021
 pieces: 567

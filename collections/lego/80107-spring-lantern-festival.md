@@ -1,6 +1,7 @@
 ---
 title: Spring Lantern Festival
 set_id: 80107
+cover: images/lego-80107.jpg
 year: 2020
 pieces: 1793
 status: unbuilt

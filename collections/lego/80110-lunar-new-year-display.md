@@ -1,6 +1,7 @@
 ---
 title: Lunar New Year Display
 set_id: 80110
+cover: images/lego-80110.png
 year: 2023
 pieces: 872
 status: unbuilt

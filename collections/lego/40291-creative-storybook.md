@@ -1,6 +1,7 @@
 ---
 title: Creative Storybook
 set_id: 40291
+cover: images/lego-40291.jpg
 theme: LimitedEdition
 year: 2018
 pieces: 307

@@ -1,6 +1,7 @@
 ---
 title: Lunar New Year Ice Festival
 set_id: 80109
+cover: images/lego-80109.png
 pieces: 1519
 status: unbuilt
 dimensions: "39x26x17 cm"

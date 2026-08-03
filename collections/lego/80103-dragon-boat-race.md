@@ -1,6 +1,7 @@
 ---
 title: Dragon Boat Race
 set_id: 80103
+cover: images/lego-80103.png
 year: 2019
 pieces: 643
 status: unbuilt

@@ -1,6 +1,7 @@
 ---
 title: Tree House
 set_id: 21318
+cover: images/lego-21318.png
 theme: IDEAS
 year: 2019
 pieces: 3036

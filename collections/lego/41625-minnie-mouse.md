@@ -1,6 +1,7 @@
 ---
 title: Minnie Mouse
 set_id: 41625
+cover: images/lego-41625.jpg
 theme: Disney
 pieces: 129
 status: unbuilt

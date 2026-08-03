@@ -1,6 +1,7 @@
 ---
 title: Crawler Exclusive Edition Set
 set_id: 41999
+cover: images/lego-41999.png
 theme: Technic
 pieces: 1585
 status: built

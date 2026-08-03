@@ -1,6 +1,7 @@
 ---
 title: Snowglobe
 set_id: 40223
+cover: images/lego-40223.jpg
 theme: LimitedEdition
 year: 2019
 pieces: 215

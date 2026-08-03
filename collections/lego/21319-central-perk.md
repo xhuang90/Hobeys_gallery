@@ -1,6 +1,7 @@
 ---
 title: Central Perk
 set_id: 21319
+cover: images/lego-21319.jpg
 theme: IDEAS
 year: 2020
 pieces: 1070

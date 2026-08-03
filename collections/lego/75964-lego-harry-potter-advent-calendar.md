@@ -1,6 +1,7 @@
 ---
 title: LEGO® Harry Potter™ Advent Calendar
 set_id: 75964
+cover: images/lego-75964.png
 theme: HarryPotter
 year: 2019
 pieces: 305

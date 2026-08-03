@@ -1,6 +1,7 @@
 ---
 title: Corner Deli
 set_id: 31050
+cover: images/lego-31050.jpg
 theme: CREATOR
 year: 2017
 pieces: 467

@@ -1,6 +1,7 @@
 ---
 title: Ship in a Bottle
 set_id: 21313
+cover: images/lego-21313.jpg
 theme: IDEAS
 year: 2018
 pieces: 962

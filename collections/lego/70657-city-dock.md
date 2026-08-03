@@ -1,6 +1,7 @@
 ---
 title: City Dock
 set_id: 70657
+cover: images/lego-70657.jpg
 theme: NINJAGO
 pieces: 3553
 status: unbuilt

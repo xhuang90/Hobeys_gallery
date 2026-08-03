@@ -1,6 +1,7 @@
 ---
 title: Disney Train and Station
 set_id: 71044
+cover: images/lego-71044.jpg
 theme: Disney
 year: 2019
 pieces: 2925

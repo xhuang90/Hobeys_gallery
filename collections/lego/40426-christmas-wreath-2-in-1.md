@@ -1,6 +1,7 @@
 ---
 title: Christmas Wreath 2-in-1
 set_id: 40426
+cover: images/lego-40426.png
 year: 2021
 pieces: 510
 status: unbuilt
