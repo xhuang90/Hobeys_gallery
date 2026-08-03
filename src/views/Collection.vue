@@ -11,32 +11,25 @@
     </section>
 
     <div class="collection-body">
-      <!-- Sidebar -->
+      <!-- Sidebar: all filters + navigation -->
       <Sidebar
         :type="type"
         :entries="myEntries"
-        :selected="sidebarSelection"
-        @select="onSidebarSelect"
+        :statuses="cfg.statuses"
+        v-model:sidebar-selection="sidebarSelection"
+        v-model:active-status="activeStatus"
+        v-model:sort="sort"
+        v-model:view="view"
       />
 
       <!-- Main content -->
       <div class="collection-main">
-        <!-- Current filter indicator -->
-        <div v-if="sidebarSelection !== 'all'" class="active-filter">
-          <span class="filter-label">筛选：</span>
+        <!-- Active filter indicator -->
+        <div v-if="hasActiveFilter" class="active-filter">
+          <span class="filter-label">当前筛选：</span>
           <span class="filter-value">{{ filterDisplayLabel }}</span>
-          <button class="filter-clear" @click="onSidebarSelect('all')">✕ 清除</button>
+          <button class="filter-clear" @click="clearAllFilters">✕ 清除全部</button>
         </div>
-
-        <!-- Filters -->
-        <FilterBar
-          :statuses="cfg.statuses"
-          :tags="allTags"
-          v-model:active-status="activeStatus"
-          v-model:active-tags="activeTags"
-          v-model:sort="sort"
-          v-model:view="view"
-        />
 
         <!-- Vinyl: grouped view (by album) -->
         <template v-if="type === 'vinyl'">
@@ -70,7 +63,7 @@
           </div>
         </template>
 
-        <!-- Other types: standard grid -->
+        <!-- Other types: standard grid / list -->
         <template v-else>
           <div v-if="view === 'grid'" class="grid">
             <EntryCard
@@ -125,10 +118,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import FilterBar from '../components/FilterBar.vue'
 import EntryCard from '../components/EntryCard.vue'
 import Sidebar from '../components/Sidebar.vue'
-import { COLLECTIONS, getTags } from '../collections.js'
+import { COLLECTIONS } from '../collections.js'
 import { useEntries } from '../useEntries.js'
 
 const route = useRoute()
@@ -137,15 +129,13 @@ const cfg = computed(() => COLLECTIONS[type.value])
 const { entries, loaded } = useEntries()
 
 const activeStatus = ref('')
-const activeTags = ref([])
 const sort = ref('date-desc')
 const view = ref('grid')
 const sidebarSelection = ref('all')
 
 const myEntries = computed(() => entries.value.filter(e => e.type === type.value))
-const allTags = computed(() => getTags(entries.value, type.value))
 
-// Sidebar filtering
+// Sidebar category filtering
 const sidebarFiltered = computed(() => {
   const sel = sidebarSelection.value
   if (sel === 'all') return myEntries.value
@@ -161,7 +151,6 @@ const sidebarFiltered = computed(() => {
         return fmt === format && (e.artist || '未知') === artist
       })
     }
-    // Format-level selection
     return myEntries.value.filter(e => normalizeFormat(e.format || 'CD') === sel)
   }
   if (type.value === 'books') {
@@ -181,28 +170,16 @@ function normalizeFormat(fmt) {
   return 'CD'
 }
 
-const filterDisplayLabel = computed(() => {
-  const sel = sidebarSelection.value
-  if (sel === 'all') return ''
-  if (sel.includes(':::')) {
-    const [format, artist] = sel.split(':::')
-    return `${format} · ${artist}`
-  }
-  return sel
-})
-
-// Apply status + tag filters on top of sidebar
+// Combine sidebar + status filters
 const displayItems = computed(() => {
   let list = sidebarFiltered.value
   if (activeStatus.value) {
     list = list.filter(e => e.status === activeStatus.value)
   }
-  if (activeTags.value.length) {
-    list = list.filter(e => activeTags.value.some(t => (e.tags || []).includes(t)))
-  }
   return list
 })
 
+// Sort
 const sortedEntries = computed(() => {
   let list = [...displayItems.value]
   const [key, dir] = sort.value.split('-')
@@ -225,14 +202,8 @@ const vinylGrouped = computed(() => {
     const key = `${entry.title}|||${entry.artist || ''}`
     if (!map.has(key)) {
       map.set(key, {
-        key,
-        type: entry.type,
-        title: entry.title,
-        artist: entry.artist,
-        slug: entry.slug,
-        cover: entry.cover,
-        items: [],
-        versions: [],
+        key, type: entry.type, title: entry.title, artist: entry.artist,
+        slug: entry.slug, cover: entry.cover, items: [], versions: [],
       })
     }
     const group = map.get(key)
@@ -244,8 +215,30 @@ const vinylGrouped = computed(() => {
   return [...map.values()]
 })
 
-function onSidebarSelect(key) {
-  sidebarSelection.value = key
+// Filter display label
+const hasActiveFilter = computed(() => {
+  return activeStatus.value !== '' || sidebarSelection.value !== 'all'
+})
+
+const filterDisplayLabel = computed(() => {
+  const parts = []
+  if (activeStatus.value) {
+    parts.push(cfg.value?.statuses?.[activeStatus.value]?.label || activeStatus.value)
+  }
+  if (sidebarSelection.value !== 'all') {
+    if (sidebarSelection.value.includes(':::')) {
+      const [format, artist] = sidebarSelection.value.split(':::')
+      parts.push(`${format} · ${artist}`)
+    } else {
+      parts.push(sidebarSelection.value)
+    }
+  }
+  return parts.join(' + ')
+})
+
+function clearAllFilters() {
+  activeStatus.value = ''
+  sidebarSelection.value = 'all'
 }
 </script>
 
@@ -272,7 +265,7 @@ function onSidebarSelect(key) {
   padding: 10px 16px;
   background: var(--hover-bg);
   border-radius: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   font-size: 13.5px;
 }
 
