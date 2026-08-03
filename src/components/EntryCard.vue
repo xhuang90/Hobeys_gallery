@@ -56,23 +56,24 @@ function formatNumber(num) {
 .card-image {
   position: relative;
   aspect-ratio: 1;
-  background: #f8f9fa;
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 8px;
 }
 
 .card-image img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 16px;
-  transition: transform 0.3s ease;
+  padding: 24px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover .card-image img {
-  transform: scale(1.05);
+  transform: scale(1.15);
 }
 
 .placeholder {

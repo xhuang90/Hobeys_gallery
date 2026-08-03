@@ -37,25 +37,27 @@
             <div
               v-for="group in vinylGrouped"
               :key="group.key"
-              class="card"
+              class="vinyl-card"
               @click="$router.push(`/${type}/${encodeURIComponent(group.key)}`)"
             >
-              <div class="cover" :style="{ background: cfg.gradient }">
+              <div class="vinyl-card-image">
                 <img v-if="group.cover" :src="group.cover" :alt="group.title" loading="lazy" />
-                <span v-else>{{ cfg.icon }}</span>
-                <div v-if="group.items.length > 1" class="card-count-badge">{{ group.items.length }}</div>
+                <div v-else class="vinyl-placeholder">
+                  <span>{{ cfg.icon }}</span>
+                </div>
+                <div v-if="group.items.length > 1" class="vinyl-count-badge">{{ group.items.length }} 版</div>
               </div>
-              <div class="bd">
-                <h3>{{ group.title }}</h3>
-                <div class="sub">{{ group.artist }}</div>
-                <div class="row">
+              <div class="vinyl-card-body">
+                <h3 class="vinyl-title">{{ group.title }}</h3>
+                <div class="vinyl-artist">{{ group.artist }}</div>
+                <div class="vinyl-footer">
                   <div class="version-tags">
                     <span
-                      v-for="v in group.versions.slice(0, 3)"
+                      v-for="v in group.versions.slice(0, 2)"
                       :key="v"
-                      class="tag"
+                      class="version-tag"
                     >{{ v }}</span>
-                    <span v-if="group.versions.length > 3" class="tag tag-more">+{{ group.versions.length - 3 }}</span>
+                    <span v-if="group.versions.length > 2" class="version-tag version-tag-more">+{{ group.versions.length - 2 }}</span>
                   </div>
                 </div>
               </div>
@@ -293,33 +295,111 @@ function clearAllFilters() {
   color: var(--ink);
 }
 
-.card-count-badge {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 600;
-  border-radius: 999px;
-  min-width: 22px;
-  height: 22px;
+/* Vinyl card - borderless, clean style */
+.vinyl-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.vinyl-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.vinyl-card-image {
+  position: relative;
+  aspect-ratio: 1;
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 6px;
-  backdrop-filter: blur(4px);
+  overflow: hidden;
+  padding: 8px;
+}
+
+.vinyl-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 16px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vinyl-card:hover .vinyl-card-image img {
+  transform: scale(1.15);
+}
+
+.vinyl-placeholder {
+  font-size: 64px;
+  opacity: 0.3;
+}
+
+.vinyl-count-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+
+.vinyl-card-body {
+  padding: 16px;
+}
+
+.vinyl-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 6px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 42px;
+}
+
+.vinyl-artist {
+  font-size: 13px;
+  color: var(--dim);
+  margin-bottom: 12px;
+}
+
+.vinyl-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
 }
 
 .version-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
 }
 
-.tag-more {
-  color: var(--accent) !important;
-  border-color: var(--accent) !important;
+.version-tag {
+  font-size: 11px;
+  color: var(--dim);
+  background: #f5f5f5;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.version-tag-more {
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  opacity: 0.7;
   font-weight: 500;
 }
 </style>
