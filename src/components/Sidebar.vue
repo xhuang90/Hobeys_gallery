@@ -403,14 +403,28 @@ watch(() => props.sidebarSelection, (val) => {
 }
 
 .sidebar-item.active {
-  background: var(--ink);
-  color: #fff;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 600;
+  position: relative;
+}
+.sidebar-item.active::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 2px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0.45;
 }
 .sidebar-item.active .sidebar-count {
-  color: rgba(255,255,255,0.7);
+  color: var(--accent);
+  opacity: 0.7;
 }
 .sidebar-item.active .status-dot {
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.4);
+  box-shadow: 0 0 0 1px var(--accent);
 }
 
 .sidebar-label {
@@ -514,7 +528,7 @@ watch(() => props.sidebarSelection, (val) => {
   transition: all 0.15s;
 }
 .view-toggle button.active {
-  background: var(--ink);
+  background: var(--accent);
   color: #fff;
 }
 .view-toggle button:hover:not(.active) { background: var(--hover-bg); }
