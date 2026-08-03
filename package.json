@@ -1,0 +1,10 @@
+{
+  "name": "myvault",
+  "version": "0.1.0",
+  "private": true,
+  "description": "个人收藏馆 — 乐高 / 唱片 / 书籍 / 电影。数据即主权，Markdown 是唯一事实来源。",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "new": "node scripts/new-entry.js"
+  }
+}
