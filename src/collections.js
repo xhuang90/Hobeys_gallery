@@ -69,7 +69,7 @@ export const COLLECTIONS = {
   },
 }
 
-export const HOME_GRADIENT = 'linear-gradient(120deg, #c23068 0%, #e0568b 55%, #ef8354 100%)'
+export const HOME_GRADIENT = 'linear-gradient(120deg, #1e3a8a 0%, #2563eb 50%, #0ea5e9 100%)'
 
 // 获取所有状态（用于全局筛选）
 export function getAllStatuses() {

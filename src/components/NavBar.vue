@@ -38,9 +38,9 @@
   margin-right: 12px;
 }
 .add-trigger:hover {
-  background: #a32858;
+  background: #1d4ed8;
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(194, 48, 104, 0.35);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
 }
 </style>
 
