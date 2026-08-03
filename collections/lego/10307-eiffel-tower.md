@@ -1,6 +1,7 @@
 ---
 title: 埃菲尔铁塔
 set_id: 10307
+cover: images/lego-10307.png
 theme: Icons
 year: 2022
 pieces: 10001

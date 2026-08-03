@@ -1,6 +1,7 @@
 ---
 title: UCS AT-AT 全地形装甲步行机
 set_id: 75313
+cover: images/lego-75313.png
 theme: 星球大战 UCS
 year: 2021
 pieces: 6785

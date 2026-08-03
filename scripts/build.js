@@ -312,8 +312,9 @@ function stars(r) {
 function card(entry, depth) {
   const cfg = COLLECTIONS[entry.type];
   const d = entry.data;
+  /* cover 是相对于站点根的路径，需要根据卡片所在深度加 ../ 前缀 */
   const coverStyle = d.cover
-    ? `background-image:url('${esc(d.cover)}')`
+    ? `background-image:url('${esc('../'.repeat(depth) + d.cover)}')`
     : `background:${cfg.gradient}`;
   const coverInner = d.cover ? '' : cfg.icon;
   return `<a class="card" href="${'../'.repeat(depth)}${cfg.dir}/${entry.slug}.html">
@@ -433,6 +434,16 @@ function main() {
     for (const e of entries.filter(x => x.type === type)) {
       write(`${COLLECTIONS[type].dir}/${e.slug}.html`, pageDetail(e));
       pages++;
+    }
+  }
+
+  /* 复制本地图片到 dist */
+  const imgSrc = path.join(SRC, 'images');
+  if (fs.existsSync(imgSrc)) {
+    const imgDst = path.join(OUT, 'images');
+    fs.mkdirSync(imgDst, { recursive: true });
+    for (const f of fs.readdirSync(imgSrc)) {
+      fs.copyFileSync(path.join(imgSrc, f), path.join(imgDst, f));
     }
   }
 
