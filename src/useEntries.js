@@ -6,7 +6,7 @@ let loading = null
 
 export function useEntries() {
   if (!loading) {
-    loading = fetch('/data.json')
+    loading = fetch(import.meta.env.BASE_URL + 'data.json')
       .then(r => r.json())
       .then(data => {
         entries.value = data
