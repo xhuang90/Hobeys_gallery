@@ -141,10 +141,10 @@
         </div>
       </template>
 
-      <!-- Movies: by director -->
+      <!-- Movies: by year + tags -->
       <template v-if="type === 'movies'">
         <div class="sidebar-section">
-          <h4 class="sidebar-title">导演</h4>
+          <h4 class="sidebar-title">上映年份</h4>
           <ul class="sidebar-list">
             <li
               class="sidebar-item"
@@ -163,6 +163,20 @@
             >
               <span class="sidebar-label">{{ group.key }}</span>
               <span class="sidebar-count">{{ group.count }}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="sidebar-section">
+          <h4 class="sidebar-title">类型</h4>
+          <ul class="sidebar-list">
+            <li
+              v-for="tag in movieTags"
+              :key="tag"
+              class="sidebar-item"
+              :class="{ active: sidebarSelection === 'tag:' + tag }"
+              @click="$emit('update:sidebarSelection', sidebarSelection === 'tag:' + tag ? 'all' : 'tag:' + tag)"
+            >
+              <span class="sidebar-label">{{ tag }}</span>
             </li>
           </ul>
         </div>
@@ -236,20 +250,30 @@ const statusCounts = computed(() => {
   return map
 })
 
-// Group by field (lego=theme, books=author, movies=director)
+// Group by field (lego=theme, books=author, movies=year)
 const groups = computed(() => {
-  const fieldMap = { lego: 'theme', books: 'author', movies: 'director' }
+  const fieldMap = { lego: 'theme', books: 'author', movies: 'year' }
   const field = fieldMap[props.type]
   if (!field) return []
   const map = {}
   for (const e of props.entries) {
-    const key = e[field] || '未知'
+    const key = String(e[field] || '未知')
     if (!map[key]) map[key] = 0
     map[key]++
   }
   return Object.entries(map)
     .map(([key, count]) => ({ key, count }))
-    .sort((a, b) => b.count - a.count)
+    .sort((a, b) => Number(b.key) - Number(a.key))
+})
+
+// Movie tags
+const movieTags = computed(() => {
+  if (props.type !== 'movies') return []
+  const tags = new Set()
+  for (const e of props.entries) {
+    (e.tags || []).forEach(t => tags.add(t))
+  }
+  return [...tags].sort()
 })
 
 // Vinyl: format groups

@@ -166,7 +166,13 @@ const sidebarFiltered = computed(() => {
     return myEntries.value.filter(e => (e.author || '未知') === sel)
   }
   if (type.value === 'movies') {
-    return myEntries.value.filter(e => (e.director || '未知') === sel)
+    // tag 筛选
+    if (sel.startsWith('tag:')) {
+      const tag = sel.slice(4)
+      return myEntries.value.filter(e => (e.tags || []).includes(tag))
+    }
+    // 年份筛选
+    return myEntries.value.filter(e => String(e.year || '未知') === sel)
   }
   return myEntries.value
 })
@@ -238,6 +244,8 @@ const filterDisplayLabel = computed(() => {
     if (sidebarSelection.value.includes(':::')) {
       const [format, artist] = sidebarSelection.value.split(':::')
       parts.push(`${format} · ${artist}`)
+    } else if (sidebarSelection.value.startsWith('tag:')) {
+      parts.push('类型: ' + sidebarSelection.value.slice(4))
     } else {
       parts.push(sidebarSelection.value)
     }
