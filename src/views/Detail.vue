@@ -286,7 +286,7 @@ const primaryCoverUrl = computed(() => {
   const cover = primary.value.cover
   if (!cover) return ''
   if (cover.startsWith('http')) return cover
-  return cover.startsWith('/') ? cover : '/' + cover
+  return import.meta.env.BASE_URL + cover.replace(/^\//, '')
 })
 
 watch(items, () => { selectedIndex.value = 0 })

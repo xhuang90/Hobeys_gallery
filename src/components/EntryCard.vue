@@ -37,7 +37,7 @@ const statusCfg = computed(() => cfg.value?.statuses?.[props.entry.status])
 function coverPath(cover) {
   if (!cover) return ''
   if (cover.startsWith('http')) return cover
-  return cover.startsWith('/') ? cover : '/' + cover
+  return import.meta.env.BASE_URL + cover.replace(/^\//, '')
 }
 
 function formatNumber(num) {

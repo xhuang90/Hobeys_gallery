@@ -137,11 +137,11 @@ const sidebarSelection = ref('all')
 
 const myEntries = computed(() => entries.value.filter(e => e.type === type.value))
 
-// 封面图路径处理：确保以 / 开头
+// 封面图路径处理：加上 BASE_URL 前缀
 function coverPath(cover) {
   if (!cover) return ''
   if (cover.startsWith('http')) return cover
-  return cover.startsWith('/') ? cover : '/' + cover
+  return import.meta.env.BASE_URL + cover.replace(/^\//, '')
 }
 
 // Sidebar category filtering
