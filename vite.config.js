@@ -5,9 +5,11 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+const isBuild = process.env.NODE_ENV === 'production' || process.argv.includes('build')
+
 export default defineConfig({
   root: __dirname,
-  base: '/Hobeys_gallery/',
+  base: isBuild ? '/Hobeys_gallery/' : '/',
   plugins: [vue()],
   build: {
     outDir: 'dist',
