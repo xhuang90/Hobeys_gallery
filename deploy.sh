@@ -4,12 +4,14 @@
 
 set -e
 cd "$(dirname "$0")"
+
 export PATH="$HOME/.workbuddy/binaries/node/versions/20.18.0/bin:$PATH"
 
 PLATFORM="${1:-vercel}"
 
 echo "🔨 1/3 本地构建..."
-npm run build
+node scripts/build.js
+npx vite build
 
 if [ "$PLATFORM" = "github" ]; then
   echo "📦 2/3 推送到 GitHub Pages..."
