@@ -2,8 +2,8 @@
   <div v-if="loaded">
     <!-- Hero -->
     <section class="hero" :style="{ background: HOME_GRADIENT }">
-      <div class="kicker">My Vault</div>
-      <h1 class="serif">我的收藏馆</h1>
+      <div class="kicker">Hobey's Gallery</div>
+      <h1 class="serif">Hobey's Gallery</h1>
       <p>乐高、唱片、书籍、电影——那些构成我的物件们。每一件都有它的来历和故事。</p>
       <div class="count">
         <div class="n">{{ entries.length }}</div>

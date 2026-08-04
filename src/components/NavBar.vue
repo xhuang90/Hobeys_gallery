@@ -1,7 +1,7 @@
 <template>
   <header class="navbar">
     <div class="wrap">
-      <router-link to="/" class="brand">🏛 我的收藏馆</router-link>
+      <router-link to="/" class="brand">🏛 Hobey's Gallery</router-link>
       <nav>
         <router-link to="/">首页</router-link>
         <router-link

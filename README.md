@@ -1,4 +1,4 @@
-# 🏛 我的收藏馆 (Hobey's Gallery)
+# 🏛 Hobey's Gallery
 
 乐高 / 唱片 / 书籍 / 电影 —— 个人收藏库 + Vue 3 SPA。
 
