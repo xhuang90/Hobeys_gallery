@@ -140,7 +140,37 @@
       </div>
     </div>
 
-    <!-- ====== Non-Vinyl: 其他类型保持原布局 ====== -->
+    <!-- ====== Movie Detail: 电影专属布局 ====== -->
+    <div v-else-if="type === 'movies'" class="movie-detail-wrap">
+      <div class="movie-detail-row">
+        <!-- 左侧：电影元信息 -->
+        <div class="movie-meta-col">
+          <div class="movie-meta-card">
+            <h3 class="movie-section-title">🎬 电影信息</h3>
+            <table class="movie-meta-table">
+              <tr v-if="primary.director"><th>导演</th><td>{{ primary.director }}</td></tr>
+              <tr v-if="primary.writers"><th>编剧</th><td>{{ primary.writers }}</td></tr>
+              <tr v-if="primary.cast"><th>主演</th><td>{{ primary.cast }}</td></tr>
+              <tr v-if="primary.genre"><th>类型</th><td>{{ primary.genre }}</td></tr>
+              <tr v-if="primary.release_date || primary.year"><th>上映日期</th><td>{{ primary.release_date || primary.year }}</td></tr>
+              <tr v-if="primary.duration"><th>片长</th><td>{{ primary.duration }}</td></tr>
+              <tr v-if="primary.imdb"><th>IMDb</th><td><a :href="'https://www.imdb.com/title/' + primary.imdb" target="_blank" rel="noopener">{{ primary.imdb }}</a></td></tr>
+              <tr v-if="primary.rating"><th>评分</th><td class="stars">{{ '★'.repeat(primary.rating) }}{{ '☆'.repeat(5 - primary.rating) }}</td></tr>
+            </table>
+          </div>
+        </div>
+        <!-- 右侧：hoho碎碎念 -->
+        <div class="movie-notes-col">
+          <div class="movie-notes-card">
+            <h3 class="movie-section-title">💭 hoho碎碎念</h3>
+            <div v-if="primary.body_html" class="movie-notes-body" v-html="primary.body_html"></div>
+            <div v-else class="movie-notes-empty">暂无笔记</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== Non-Vinyl/Movie: 其他类型保持原布局 ====== -->
     <template v-else>
       <!-- Multi-version view -->
       <div v-if="items.length > 1" class="detail-body">
@@ -283,6 +313,13 @@ const allTags = computed(() => {
 
 // 封面图路径处理
 const primaryCoverUrl = computed(() => {
+  const cover = primary.value.cover
+  if (!cover) return ''
+  if (cover.startsWith('http')) return cover
+  return import.meta.env.BASE_URL + cover.replace(/^\//, '')
+})
+
+const movieCoverUrl = computed(() => {
   const cover = primary.value.cover
   if (!cover) return ''
   if (cover.startsWith('http')) return cover
@@ -627,6 +664,106 @@ const groupedVersions = computed(() => {
   font-family: monospace;
   margin-left: 12px;
   flex-shrink: 0;
+}
+
+/* ====== Movie Detail Layout ====== */
+.movie-detail-wrap {
+  padding: 32px 0 60px;
+}
+
+.movie-detail-row {
+  display: flex;
+  gap: 24px;
+}
+@media (max-width: 760px) {
+  .movie-detail-row { flex-direction: column; }
+}
+
+.movie-meta-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.movie-notes-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.movie-section-title {
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--line);
+}
+
+.movie-meta-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px 28px;
+  height: 100%;
+}
+
+.movie-meta-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.movie-meta-table th,
+.movie-meta-table td {
+  padding: 9px 0;
+  text-align: left;
+  border-bottom: 1px solid #f5f5f5;
+}
+.movie-meta-table tr:last-child th,
+.movie-meta-table tr:last-child td {
+  border-bottom: none;
+}
+.movie-meta-table th {
+  color: var(--faint);
+  font-weight: 400;
+  width: 72px;
+  font-size: 13px;
+  vertical-align: top;
+  padding-top: 11px;
+}
+.movie-meta-table td {
+  color: var(--ink);
+  padding-top: 11px;
+  line-height: 1.7;
+}
+.movie-meta-table td a {
+  color: var(--accent);
+}
+.movie-meta-table td.stars {
+  color: #e8a33d;
+  letter-spacing: 1.5px;
+  font-size: 14px;
+}
+
+.movie-notes-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px 28px;
+  height: 100%;
+}
+
+.movie-notes-body {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--dim);
+}
+.movie-notes-body :deep(h2) { font-size: 16px; margin: 0 0 12px; color: var(--ink); }
+.movie-notes-body :deep(p) { margin: 8px 0; }
+
+.movie-notes-empty {
+  color: var(--faint);
+  font-size: 14px;
+  text-align: center;
+  padding: 40px 0;
 }
 
 /* ---- Keep existing styles ---- */
