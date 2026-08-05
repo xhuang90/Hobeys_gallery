@@ -133,6 +133,16 @@ function main() {
     }
   }
 
+  // 复制封面图
+  const coverSrc = path.join(SRC, 'cover');
+  if (fs.existsSync(coverSrc)) {
+    const coverDst = path.join(PUBLIC, 'cover');
+    fs.mkdirSync(coverDst, { recursive: true });
+    for (const f of fs.readdirSync(coverSrc)) {
+      fs.copyFileSync(path.join(coverSrc, f), path.join(coverDst, f));
+    }
+  }
+
   console.log(`✅ 数据构建完成：${entries.length} 件馆藏，耗时 ${Date.now() - started}ms`);
   console.log(`   输出：public/data.json`);
 }

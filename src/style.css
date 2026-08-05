@@ -32,12 +32,39 @@ a { color: inherit; text-decoration: none; }
 
 /* ============ Navbar ============ */
 .navbar {
-  border-bottom: 1px solid var(--line);
-  background: rgba(251, 251, 250, 0.88);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(135deg, #1a3a5c 0%, #2a5298 50%, #1e4070 100%);
   position: sticky;
   top: 0;
-  backdrop-filter: blur(12px);
   z-index: 100;
+}
+.navbar .brand { color: #fff; }
+.navbar nav a { color: rgba(255,255,255,0.72); }
+.navbar nav a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.navbar nav a.router-link-active { color: #fff; background: rgba(255,255,255,0.15); font-weight: 500; }
+.search-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.search-trigger:hover { border-color: rgba(255,255,255,0.4); color: #fff; background: rgba(255,255,255,0.18); }
+.search-trigger kbd {
+  font-family: inherit;
+  font-size: 11px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  padding: 1px 5px;
+  color: rgba(255,255,255,0.7);
 }
 .navbar .wrap {
   display: flex;
@@ -56,43 +83,7 @@ a { color: inherit; text-decoration: none; }
   gap: 4px;
   flex: 1;
 }
-.navbar nav a {
-  color: var(--dim);
-  font-size: 13.5px;
-  padding: 4px 10px;
-  border-radius: 6px;
-  white-space: nowrap;
-  transition: all 0.15s;
-}
-.navbar nav a:hover { background: var(--hover-bg); color: var(--ink); }
-.navbar nav a.router-link-active { color: var(--accent); font-weight: 500; }
-
-.search-trigger {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 12px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  color: var(--faint);
-  font-size: 13px;
-  cursor: pointer;
-  background: var(--card);
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.search-trigger:hover { border-color: var(--dim); color: var(--dim); }
-.search-trigger kbd {
-  font-family: inherit;
-  font-size: 11px;
-  background: var(--hover-bg);
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  padding: 1px 5px;
-  color: var(--faint);
-}
-
-/* ============ Hero Banner ============ */
+/* ============ Hero Banner (global, kept for backwards compat) ============ */
 .hero {
   margin: 28px 0 0;
   border-radius: 12px;

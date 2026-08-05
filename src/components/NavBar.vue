@@ -50,19 +50,20 @@
   align-items: center;
   gap: 6px;
   padding: 5px 12px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255,255,255,0.2);
   border-radius: 6px;
-  color: var(--dim);
+  color: rgba(255,255,255,0.8);
   font-size: 13px;
   cursor: pointer;
-  background: var(--card);
+  background: rgba(255,255,255,0.1);
   transition: all 0.15s;
   white-space: nowrap;
   margin-left: 8px;
 }
 .export-trigger:hover {
-  border-color: var(--dim);
-  color: var(--ink);
+  border-color: rgba(255,255,255,0.4);
+  color: #fff;
+  background: rgba(255,255,255,0.18);
 }
 </style>
 
